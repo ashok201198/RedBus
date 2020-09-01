@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <form action="{% url 'redbus:add_bus' %}">
+        <button class="btn btn-default">Add Bus</button>
+    </form>
+    <br/>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <br/>
+        <button type="submit" value="submit">Submit</button>
+    </form>
+    <br/>
+{% endblock %}

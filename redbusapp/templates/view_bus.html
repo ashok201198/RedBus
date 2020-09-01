@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+{% load redbusapp_extras %}
+{% block content %}
+    <style type="text/css">
+        #available {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        #booked {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        #selected {
+            background-color: blue;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+    <script type="text/javascript">
+        function change(x, price) {
+            if (x.id === "available") {
+                document.getElementById("seatdiv").style.visibility = "visible";
+                document.getElementById("pricediv").style.visibility = "visible";
+                x.id = "selected";
+                document.getElementById("seats").innerText = document.getElementById("seats").innerText + x.innerText + ",";
+                document.getElementById("id_seats").value = document.getElementById("seats").innerText;
+                document.getElementById("price").innerText = parseInt(document.getElementById("price").innerText, 10) + price;
+            }
+            else if (x.id === "selected") {
+                x.id = "available";
+                document.getElementById("seats").innerText = document.getElementById("seats").innerText.replace(x.innerText + ",", "");
+                document.getElementById("id_seats").value = document.getElementById("seats").innerText;
+                document.getElementById("price").innerText = parseInt(document.getElementById("price").innerText, 10) - price;
+                if (document.getElementById("seats").innerText === "") {
+                    document.getElementById("seatdiv").style.visibility = "hidden";
+                }
+                if (parseInt(document.getElementById("price").innerText, 10) === 0) {
+                    document.getElementById("pricediv").style.visibility = "hidden";
+                }
+            }
+        }
+
+
+    </script>
+    <table>
+    {{ error }}
+        {% for row in rows %}
+            <tr>{% for col in columns %}
+                <td>
+                    {% with row|addstr:col|stringformat:"s" as seat %}
+                        {% if seat in seats %}
+                            <button type="button" disabled="disabled" id="booked">{{ row }}{{ col }}</button>
+                        {% else %}
+                            <button type="button" onclick="change(this,{{ price }})" id="available">
+                                {{ row }}{{ col }}</button>
+                            </td>
+                        {% endif %}
+                    {% endwith %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    &nbsp;&nbsp;
+    <buttton type="button" disabled id="available"></buttton><label>&nbsp;&nbsp; Available</label>
+    <buttton type="button" disabled id="booked"></buttton><label>&nbsp;&nbsp;Booked</label>
+    <buttton type="button" disabled id="selected"></buttton><label>&nbsp;&nbsp;Selected</label>
+    <div style="visibility: hidden" id="seatdiv">Selected seats:<p id="seats"></p><br></div>
+
+    <div style="visibility: hidden;" id="pricediv">Price:<p id="price">0</p></div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="mdl-button--colored">Book</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block content %}
+    {{ error_message }}
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+    {{form.as_p}}
+    </div>
+    <br/>
+    <br/>
+<button type="submit" value="submit">Submit</button>
+</form>
+
+{% endblock %}

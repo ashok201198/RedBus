@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>{{ error }}</h3>
+        <label>Enter the security code sent to your email</label>
+        <br>
+        {{ form }}
+        <br/>
+        <br/>
+        <button class="btn btn-default" type="submit" value="submit">Submit</button>
+        <a href="{% url 'redbus:login' %}" style="float: right">
+            Login
+        </a>
+        <a href="{% url 'redbus:register' %}" style="float: right">
+            Register
+        </a>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+    <form method="post">
+        {{ error }}
+        {% csrf_token %}
+        {{ form }}
+        <table class="table-hover table-bordered">
+            <thead>
+            <th>Bus id</th>
+            <th>Price</th>
+            <th>Arrival Time</th>
+            <th>Departure Time</th>
+            <th>Book</th>
+            </thead>
+            {% for bus in buses %}
+                <tr>
+                    <td>{{ bus.bus_id }}</td>
+                    <td>{{ bus.bus_price }}</td>
+                    <td>{{ bus.arrival }}</td>
+                    <td>{{ bus.departure }}</td>
+                    <td>
+                        <button class="mdl-button--colored" type="submit"
+                                onclick="document.getElementById('id_bus').value='{{ bus.bus_id }}'">
+                            Book
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br/>
+        <br/>
+    </form>
+
+{% endblock %}

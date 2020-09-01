@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load redbusapp_extras %}
+{% block content %}
+	<h3>{{ error }}</h3>
+	<form method="post">
+		{% csrf_token %}
+		<div class="card center-div">
+			<label>Contact Details</label>
+			<div>
+				{{ contact.as_p }}
+			</div>
+		</div>
+		<br>
+		<br>
+		<center><label><h4>Passenger Details</h4></label></center>
+		{% for form in forms %}
+			<div class="card center-div">
+				<p>
+					Seat :{% cycle_list seats %}
+				</p>
+				<div>
+					{{ form.as_p }}
+				</div>
+
+			</div>
+			<br><br>
+		{% endfor %}
+		<center>
+			<button class="mdl-button--colored " type="submit">Submit</button>
+		</center>
+	</form>
+{% endblock %}

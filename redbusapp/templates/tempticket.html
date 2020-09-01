@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h2 align="center">Happy Journey</h2>
+    <h5 align="center">
+        Bus Number:{{ bus_no }}
+        &nbsp;&nbsp;
+        Journey Date: {{ date }}
+        &nbsp;&nbsp;
+        <br>
+        Source: {{ source }}
+        &nbsp;&nbsp;
+        Arrival Time: {{ arrival }}
+        &nbsp;&nbsp;
+        <br>
+        Destination: {{ dest }}
+        &nbsp;&nbsp;
+        Departure Time: {{ depart }}
+    </h5>
+    <br>
+    <h4>
+        <table align="center" border="1 px">
+            <th>Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Seat</th>
+
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.name }}</td>
+                    <td>{{ ticket.age }}</td>
+                    <td>{{ ticket.gender }}</td>
+                    <td>{{ ticket.seat }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </h4>
+    <h5 align="center">
+        Price: {{ price }}
+    </h5>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>{{ error }}</h3>
+        {% if proceed %}
+        <label>Enter new password</label>
+        <br>
+        {{ form }}
+        <br/>
+        <br/>
+        <button class="btn btn-default" id="button" type="submit" value="submit" >Submit</button>
+        <a href="{% url 'redbus:login' %}" style="float: right">
+            Login
+        </a>
+        <a href="{% url 'redbus:register' %}" style="float: right">
+            Register
+        </a>
+            {% else %}
+            <h1>Restricted Access</h1>
+        {% endif %}
+    </form>
+
+{% endblock %}
